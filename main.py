@@ -53,7 +53,7 @@ def get_second_post_info(entries):
         return guid, link, excerpt
     except tweepy.TweepyException as e:
         if '429' in str(e):
-                print("Muitas solicitações. Espere um momento antes de tentar novamente.")
+            print("Muitas solicitações. Espere um momento antes de tentar novamente.")
         else:
             print(f"Erro ao enviar tweet: {str(e)}")
 
@@ -68,7 +68,7 @@ def check_feed():
         cursor.execute("SELECT guid FROM guid_list WHERE guid = %s", (new_guid,))
         already_exists = cursor.fetchone() is not None
         if new_guid and not already_exists:
-            cursor.execute("INSERT INTO guid_list VALUES (%s) ON CONFLICT (guid) DO NOTHING", (new_guid,))
+            cursor.execute("INSERT INTO guid_list (guid) VALUES (%s) ON CONFLICT (guid) DO NOTHING", (new_guid,))
             check_and_trim_list(100)
             conn.commit()
             try:
@@ -88,7 +88,7 @@ def hello():
 entries = get_feed_entries(FEED_URL)
 if entries:
     for entry in entries:
-        cursor.execute("INSERT INTO guid_list VALUES (%s) ON CONFLICT (guid) DO NOTHING", (entry.guid,))
+        cursor.execute("INSERT INTO guid_list (guid) VALUES (%s) ON CONFLICT (guid) DO NOTHING", (entry.guid,))
     check_and_trim_list(100)
     second_guid, second_link, second_excerpt = get_second_post_info(entries)
     if second_guid:
@@ -111,4 +111,5 @@ scheduler.start()
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
+
 
