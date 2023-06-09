@@ -31,7 +31,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
 
 # Crie a tabela para armazenar os GUIDs se ainda não existir
-cursor.execute("CREATE TABLE IF NOT EXISTS guid_list (guid TEXT)")
+cursor.execute("CREATE TABLE IF NOT EXISTS guid_list (guid TEXT UNIQUE)")
 conn.commit()
 
 def get_feed_entries(feed_url):
@@ -68,7 +68,7 @@ def check_feed():
         cursor.execute("SELECT guid FROM guid_list WHERE guid = %s", (new_guid,))
         already_exists = cursor.fetchone() is not None
         if new_guid and not already_exists:
-            cursor.execute("INSERT INTO guid_list VALUES (%s)", (new_guid,))
+            cursor.execute("INSERT INTO guid_list VALUES (%s) ON CONFLICT (guid) DO NOTHING", (new_guid,))
             check_and_trim_list(100)
             conn.commit()
             try:
@@ -88,7 +88,7 @@ def hello():
 entries = get_feed_entries(FEED_URL)
 if entries:
     for entry in entries:
-        cursor.execute("INSERT INTO guid_list VALUES (%s)", (entry.guid,))
+        cursor.execute("INSERT INTO guid_list VALUES (%s) ON CONFLICT (guid) DO NOTHING", (entry.guid,))
     check_and_trim_list(100)
     second_guid, second_link, second_excerpt = get_second_post_info(entries)
     if second_guid:
@@ -111,3 +111,4 @@ scheduler.start()
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
+
