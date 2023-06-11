@@ -51,11 +51,8 @@ def get_second_post_info(entries):
         soup = BeautifulSoup(description, 'html.parser')
         excerpt = soup.find('p').text
         return guid, link, excerpt
-    except tweepy.TweepyException as e:
-        if '429' in str(e):
-            print("Muitas solicitações. Espere um momento antes de tentar novamente.")
-        else:
-            print(f"Erro ao enviar tweet: {str(e)}")
+    except IndexError as e:
+        print(f"Erro ao extrair informações do post: {str(e)}")
 
 def check_and_trim_list(limit):
     cursor.execute("DELETE FROM guid_list WHERE ctid IN (SELECT ctid FROM guid_list ORDER BY guid DESC OFFSET %s)", (limit,))
@@ -91,7 +88,13 @@ if entries:
         cursor.execute("INSERT INTO guid_list (guid) VALUES (%s) ON CONFLICT (guid) DO NOTHING", (entry.guid,))
     conn.commit()
     new_guid, new_link, new_excerpt = get_second_post_info(entries)
-    client.create_tweet(text = f'{new_excerpt} {new_link}')
+    try:
+        client.create_tweet(text = f'{new_excerpt} {new_link}')
+    except tweepy.TweepyException as e:
+        if '429' in str(e):
+            print("Muitas solicitações. Espere um momento antes de tentar novamente.")
+        else:
+            print(f"Erro ao enviar tweet: {str(e)}")
 
 # Configurar o agendador para verificar o feed a cada 10 minutos
 sched = BackgroundScheduler(daemon=True)
