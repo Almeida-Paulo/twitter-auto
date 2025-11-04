@@ -12,7 +12,7 @@ import psycopg2
 app = Flask(__name__)
 
 # URL do feed
-FEED_URL = 'https://agrozil.com.br/feed/'
+FEED_URL = 'url do site'
 
 # Chaves API movidas para variáveis de ambiente
 api_key = os.environ.get("API_KEY")
