@@ -1,5 +1,5 @@
 ---
-Título: Um bot para x.com
+Um bot para x.com
 Feito a partir de um Exemplo Python Flask disponível na Railway
 ---
 
