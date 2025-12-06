@@ -1,6 +1,5 @@
 ---
-title: Flask
-description: Um bot para x.com
+Título: Um bot para x.com
 Feito a partir de um Exemplo Python Flask disponível na Railway
 ---
 
@@ -16,5 +15,9 @@ Basicamente você pode fazer o fork, suas adaptações e fazer o deploy via repo
 - Faça um deploy na Railway ou local de sua preferência, de uma aplicação Flask simples, utilizando um banco de dados postgreSQL
 - Instale os requerimentos Python: `pip install -r requirements.txt`
 - Substitua o código main.py do modelo Flask simples pelo main.py deste repositório
-- Configura as variáveis de ambiente com os seus dados:
-- 
+- Configure as variáveis de ambiente com os seus dados
+  "API_KEY"
+  "API_SECRET"
+  "BEARER_TOKEN"
+  "ACCESS_TOKEN"
+  "ACCESS_TOKEN_SECRET"
