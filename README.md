@@ -1,9 +1,9 @@
 ---
 Um bot para x.com, que posta automaticamente as publicações feitas em um site Wordpress
-Feito a partir de um Exemplo Python Flask disponível na Railway
 ---
 
 ## ✨ Features
+Feito a partir de um Exemplo Python Flask disponível na Railway
 - Python
 - Flask
 - PostgreSQL
