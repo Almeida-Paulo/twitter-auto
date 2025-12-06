@@ -1,23 +1,20 @@
 ---
 title: Flask
-description: A popular minimal server framework for Python
-tags:
-  - python
-  - flask
+description: Um bot para x.com
+Feito a partir de um Exemplo Python Flask disponível na Railway
 ---
 
-# Python Flask Example
-
-This is a [Flask](https://flask.palletsprojects.com/en/1.1.x/) app that serves a simple JSON response.
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/zUcpux)
-
 ## ✨ Features
-
 - Python
 - Flask
+- PostgreSQL
 
-## 💁‍♀️ How to use
+## 💁‍♀️ Como usar
 
-- Install Python requirements `pip install -r requirements.txt`
-- Start the server for development `python3 main.py`
+Basicamente você pode fazer o fork, suas adaptações e fazer o deploy via repositório na Railway ou local de sua preferência, ou:
+
+- Faça um deploy na Railway ou local de sua preferência, de uma aplicação Flask simples, utilizando um banco de dados postgreSQL
+- Instale os requerimentos Python: `pip install -r requirements.txt`
+- Substitua o código main.py do modelo Flask simples pelo main.py deste repositório
+- Configura as variáveis de ambiente com os seus dados:
+- 
